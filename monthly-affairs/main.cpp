@@ -19,7 +19,6 @@ ostream& operator<<(ostream& stream, const vector<T>& v) {
     return stream;
 }
 
-// TODO вектор наполняется
 int main() {
     array<int, 12> MONTH = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
     int currentMonth = 0;
@@ -54,6 +53,7 @@ int main() {
                 cin >> action;
                 database[day - 1].push_back(action);
             } else if (request == "DUMP") {
+                cout << database[day - 1].size() << " ";
                 for (const auto& data : database[day - 1]) {
                     cout << data << " ";
                 }
