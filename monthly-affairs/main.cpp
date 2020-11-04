@@ -4,6 +4,8 @@
 #include <algorithm>
 #include <array>
 
+#include "database.h"
+
 using namespace std;
 
 template<typename T>
@@ -16,15 +18,52 @@ ostream& operator<<(ostream& stream, const vector<T>& v) {
         }
     }
     stream << "]";
+
     return stream;
 }
 
-int main() {
-    array<int, 12> MONTH = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-    int currentMonth = 0;
-    vector<vector<string>> database;
+const  std::array<int, 12> MONTH = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
-    database.resize(MONTH[currentMonth]);
+class Database {
+private:
+    std::vector<std::vector<std::string>> data;
+    uint currentMonth = 0;
+public:
+    Database() {
+        data.resize(MONTH[currentMonth]);
+    }
+    void nextMonth() {
+        int nextMonth = (currentMonth + 1) % MONTH.size();
+        int currentMonthSize = MONTH[currentMonth];
+        int nextMonthSize = MONTH[nextMonth];
+        if (currentMonthSize > nextMonthSize) {
+            for (int j = 0; j < currentMonthSize - nextMonthSize; ++j) {
+                data.emplace_back(data[currentMonthSize - j - 1]);
+            }
+        }
+        data.resize(nextMonthSize);
+        currentMonth = nextMonth;
+    }
+    void addWork(uint day, const std::string& work) {
+        data[--day].push_back(work);
+    }
+    const std::vector<std::string>& getDump(uint day) {
+        return data[--day];
+    }
+    void printDump(ostream& stream, const std::vector<std::string>& values) {
+        stream << values.size() << " ";
+        stream << accumulate(values.begin(), values.end(), std::string(), [](std::string& current, const std::string& value) {
+            return current += " " + value;
+            });
+        stream << "\n";
+    }
+};
+
+
+
+int main() {
+    Database data;
+
 
     int n;
     cin >> n;
@@ -33,31 +72,16 @@ int main() {
         cin >> request;
 
         if (request == "NEXT") {
-            int nextMonth = (currentMonth + 1) % MONTH.size();
-            int currentMonthSize = MONTH[currentMonth];
-            int nextMonthSize = MONTH[nextMonth];
-            if (currentMonthSize > nextMonthSize) {
-                for (int j = 0; j < currentMonthSize - nextMonthSize; ++j) {
-                    for (const auto& item : database[currentMonthSize - j - 1]) {
-                        database[nextMonthSize - 1].push_back(item);
-                    }
-                }
-            }
-            database.resize(nextMonthSize);
-            currentMonth = nextMonth;
+            data.nextMonth();
         } else {
             int day;
             cin >> day;
             if (request == "ADD") {
                 string action;
                 cin >> action;
-                database[day - 1].push_back(action);
+                data.addWork(day, action);
             } else if (request == "DUMP") {
-                cout << database[day - 1].size() << " ";
-                for (const auto& data : database[day - 1]) {
-                    cout << data << " ";
-                }
-                cout << endl;
+                data.printDump(cout, data.getDump(day));
             }
         }
     }
