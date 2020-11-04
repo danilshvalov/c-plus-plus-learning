@@ -5,13 +5,27 @@
 #include <array>
 
 using namespace std;
+
+template<typename T>
+ostream& operator<<(ostream& stream, const vector<T>& v) {
+    stream << "[";
+    for (int i = 0; i < v.size(); ++i) {
+        stream << v[i];
+        if (i != v.size() - 1) {
+            stream << ", ";
+        }
+    }
+    stream << "]";
+    return stream;
+}
+
 // TODO вектор наполняется
 int main() {
     array<int, 12> MONTH = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
     int currentMonth = 0;
     vector<vector<string>> database;
 
-    database.reserve(MONTH[currentMonth]);
+    database.resize(MONTH[currentMonth]);
 
     int n;
     cin >> n;
@@ -30,8 +44,8 @@ int main() {
                     }
                 }
             }
+            database.resize(nextMonthSize);
             currentMonth = nextMonth;
-
         } else {
             int day;
             cin >> day;
