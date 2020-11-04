@@ -36,19 +36,6 @@
 ## Пример  
 #### Ввод
 >1  
-2  
-3  
-4  
-5  
-6  
-7  
-8  
-9  
-10  
-11  
-12  
-13  
-14  
 12  
 ADD 5 Salary  
 ADD 31 Walk  
@@ -64,15 +51,7 @@ ADD 28 Payment
 DUMP 28  
 >
 #### Вывод  
->
-1  
-2  
-3  
-4  
-5  
-6  
-7  
-1 Salary  
+>1 Salary  
 2 WalkPreparations Walk  
 0  
 0  
