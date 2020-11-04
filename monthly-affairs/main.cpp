@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <array>
 
-#include "database.h"
+// #include "database.h"
 
 using namespace std;
 
@@ -38,7 +38,7 @@ public:
         int nextMonthSize = MONTH[nextMonth];
         if (currentMonthSize > nextMonthSize) {
             for (int j = 0; j < currentMonthSize - nextMonthSize; ++j) {
-                data.emplace_back(data[currentMonthSize - j - 1]);
+                std::move(data[currentMonthSize - j - 1].begin(), data[currentMonthSize - j - 1].end(), back_inserter(data[nextMonthSize - 1]));
             }
         }
         data.resize(nextMonthSize);
@@ -63,7 +63,6 @@ public:
 
 int main() {
     Database data;
-
 
     int n;
     cin >> n;
