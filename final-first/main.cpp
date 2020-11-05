@@ -1,116 +1,58 @@
 #include <iostream>
-#include <optional>
 #include <sstream>
-#include <algorithm>
-#include <cctype>
-#include <array>
 #include <map>
-#include <tuple>
-#include <set>
 
-#include "test_runner.h"
 #include "date.h"
+#include "exceptions.h"
+#include "database.h"
 
-class Exceptions {
-public:
-    static void dateFormatException(const std::string& msg) {
-        std::stringstream stream;
-        stream << "Wrong format date: " << msg;
-        throw stream.str();
-    }
-    static void monthValueException(const std::string& msg) {
-        std::stringstream stream;
-        stream << "Month value is invalid: " << msg;
-        throw stream.str();
-    }
-    static void dayValueException(const std::string& msg) {
-        std::stringstream stream;
-        stream << "Day value is invalid: " << msg;
-        throw stream.str();
-    }
-};
-
-Exceptions exceptions;
-
-
-
-class Database {
-private:
-    std::set<Date> _data;
-public:
-    void printAllEvents(std::ostream& stream) {
-
-    }
-};
-
-std::optional<std::string> getString(std::stringstream& stream) {
-    if (!stream.eof()) {
-        std::string result;
-        stream >> result;
-        return std::move(result);
-    }
-    return {};
-}
-
-
-
-Date parseDate(const std::string& input) {
-    Date date;
-    std::stringstream stream;
-    stream << input;
-
-    stream >> date.year;
-
-    if (stream.eof() || stream.peek() != '-') exceptions.dateFormatException(input);
-    stream.ignore(1);
-    stream >> date.month;
-
-    if (stream.eof() || stream.peek() != '-') exceptions.dateFormatException(input);
-    stream.ignore(1);
-    stream >> date.day;
-    if (stream.fail() || !stream.eof()) exceptions.dateFormatException(input);
-
-    return date;
-}
-
-void checkValidDate(const Date& date) {
-    if (date.month < 1 || date.month > 12) {
-        exceptions.monthValueException(std::to_string(date.month));
-    }
-    if (date.day < 1 || date.day > 31) {
-        exceptions.dayValueException(std::to_string(date.day));
-    }
-}
-
-void parseRequest(std::istream& stream) {
-    std::stringstream input;
-    std::string inputText;
-    std::getline(stream, inputText);
-    input << inputText;
-
-    auto type = getString(input);
-    auto date = getString(input);
-    auto event = getString(input);
-
-    if (type.value() == "Print") {
-        std::cout << "Print all events!" << '\n';
-    } else if (type.value() == "Add") {
-        std::cout << "Add \"" << date.value() << "\" \"" << event.value() << "\"\n";
-    } else if (type.value() == "Del") {
-        if (event) {
-            std::cout << "Del \"" << date.value() << "\" \"" << event.value() << "\"\n";
+void parseRequest(Database& db, std::istream& input, std::ostream& output, const std::string& command) {
+    if (command == "Print") {
+        db.printAllEvents(output);
+    } else if (command == "Add") {
+        std::string event, date;
+        input >> date >> event;
+        db.addEvent(parseDate(date), event);
+    } else if (command == "Del") {
+        std::string date;
+        input >> date;
+        if (!input.eof() && input.peek() != '\n') {
+            std::string event;
+            input >> event;
+            if (db.deleteEvent(parseDate(date), event)) {
+                output << "Deleted successfully" << std::endl;
+            } else {
+                output << "Event not found" << std::endl;
+            }
         } else {
-            std::cout << "Del \"" << date.value() << "\" without event\n";
+            int deletedCount = db.deleteEvents(parseDate(date));
+            output << "Deleted " << deletedCount  << " events" << std::endl;
         }
+    } else if (command == "Find") {
+        std::string date;
+        input >> date;
+        db.findEvents(parseDate(date), output);
+    } else {
+        unknownCommandException(command);
     }
 }
 
 int main() {
-    std::string date;
-    std::cin >> date;
-    parseDate(date);
-
-    
-
+    Database db;
+    std::string input;
+    while (std::getline(std::cin, input)) {
+        std::stringstream stream;
+        stream << input;
+        std::string request;
+        stream >> request;
+        if (request.size()) {
+            try {
+                parseRequest(db, stream, std::cout, request);
+            } catch (std::exception& e) {
+                std::cout << e.what();
+                break;
+            }
+        }
+    }
     return 0;
 }
