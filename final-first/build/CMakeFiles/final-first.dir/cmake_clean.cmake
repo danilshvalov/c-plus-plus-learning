@@ -1,5 +1,7 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/final-first.dir/database.cpp.o"
   "CMakeFiles/final-first.dir/date.cpp.o"
+  "CMakeFiles/final-first.dir/exceptions.cpp.o"
   "CMakeFiles/final-first.dir/main.cpp.o"
   "final-first"
   "final-first.pdb"

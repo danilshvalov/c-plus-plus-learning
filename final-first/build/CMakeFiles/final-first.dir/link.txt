@@ -1,1 +1,1 @@
-/bin/clang++-10   -std=c++17 -g  -rdynamic CMakeFiles/final-first.dir/main.cpp.o CMakeFiles/final-first.dir/date.cpp.o  -o final-first 
+/bin/clang++-10   -std=c++17 -g  -rdynamic CMakeFiles/final-first.dir/main.cpp.o CMakeFiles/final-first.dir/date.cpp.o CMakeFiles/final-first.dir/database.cpp.o CMakeFiles/final-first.dir/exceptions.cpp.o  -o final-first 

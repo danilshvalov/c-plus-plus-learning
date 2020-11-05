@@ -520,6 +520,33 @@ final-first/fast:
 	$(MAKE) -f CMakeFiles/final-first.dir/build.make CMakeFiles/final-first.dir/build
 .PHONY : final-first/fast
 
+database.o: database.cpp.o
+
+.PHONY : database.o
+
+# target to build an object file
+database.cpp.o:
+	$(MAKE) -f CMakeFiles/final-first.dir/build.make CMakeFiles/final-first.dir/database.cpp.o
+.PHONY : database.cpp.o
+
+database.i: database.cpp.i
+
+.PHONY : database.i
+
+# target to preprocess a source file
+database.cpp.i:
+	$(MAKE) -f CMakeFiles/final-first.dir/build.make CMakeFiles/final-first.dir/database.cpp.i
+.PHONY : database.cpp.i
+
+database.s: database.cpp.s
+
+.PHONY : database.s
+
+# target to generate assembly for a file
+database.cpp.s:
+	$(MAKE) -f CMakeFiles/final-first.dir/build.make CMakeFiles/final-first.dir/database.cpp.s
+.PHONY : database.cpp.s
+
 date.o: date.cpp.o
 
 .PHONY : date.o
@@ -546,6 +573,33 @@ date.s: date.cpp.s
 date.cpp.s:
 	$(MAKE) -f CMakeFiles/final-first.dir/build.make CMakeFiles/final-first.dir/date.cpp.s
 .PHONY : date.cpp.s
+
+exceptions.o: exceptions.cpp.o
+
+.PHONY : exceptions.o
+
+# target to build an object file
+exceptions.cpp.o:
+	$(MAKE) -f CMakeFiles/final-first.dir/build.make CMakeFiles/final-first.dir/exceptions.cpp.o
+.PHONY : exceptions.cpp.o
+
+exceptions.i: exceptions.cpp.i
+
+.PHONY : exceptions.i
+
+# target to preprocess a source file
+exceptions.cpp.i:
+	$(MAKE) -f CMakeFiles/final-first.dir/build.make CMakeFiles/final-first.dir/exceptions.cpp.i
+.PHONY : exceptions.cpp.i
+
+exceptions.s: exceptions.cpp.s
+
+.PHONY : exceptions.s
+
+# target to generate assembly for a file
+exceptions.cpp.s:
+	$(MAKE) -f CMakeFiles/final-first.dir/build.make CMakeFiles/final-first.dir/exceptions.cpp.s
+.PHONY : exceptions.cpp.s
 
 main.o: main.cpp.o
 
@@ -614,9 +668,15 @@ help:
 	@echo "... ContinuousTest"
 	@echo "... ContinuousSubmit"
 	@echo "... final-first"
+	@echo "... database.o"
+	@echo "... database.i"
+	@echo "... database.s"
 	@echo "... date.o"
 	@echo "... date.i"
 	@echo "... date.s"
+	@echo "... exceptions.o"
+	@echo "... exceptions.i"
+	@echo "... exceptions.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

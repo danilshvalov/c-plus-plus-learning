@@ -4,7 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/danilshvalov/dev/c-plus-plus/c-plus-plus-learning/final-first/database.cpp" "/home/danilshvalov/dev/c-plus-plus/c-plus-plus-learning/final-first/build/CMakeFiles/final-first.dir/database.cpp.o"
   "/home/danilshvalov/dev/c-plus-plus/c-plus-plus-learning/final-first/date.cpp" "/home/danilshvalov/dev/c-plus-plus/c-plus-plus-learning/final-first/build/CMakeFiles/final-first.dir/date.cpp.o"
+  "/home/danilshvalov/dev/c-plus-plus/c-plus-plus-learning/final-first/exceptions.cpp" "/home/danilshvalov/dev/c-plus-plus/c-plus-plus-learning/final-first/build/CMakeFiles/final-first.dir/exceptions.cpp.o"
   "/home/danilshvalov/dev/c-plus-plus/c-plus-plus-learning/final-first/main.cpp" "/home/danilshvalov/dev/c-plus-plus/c-plus-plus-learning/final-first/build/CMakeFiles/final-first.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "Clang")
