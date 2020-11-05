@@ -5,17 +5,41 @@
 #include <cctype>
 #include <array>
 #include <map>
+#include <tuple>
+#include <set>
 
 #include "test_runner.h"
+#include "date.h"
+
+class Exceptions {
+public:
+    static void dateFormatException(const std::string& msg) {
+        std::stringstream stream;
+        stream << "Wrong format date: " << msg;
+        throw stream.str();
+    }
+    static void monthValueException(const std::string& msg) {
+        std::stringstream stream;
+        stream << "Month value is invalid: " << msg;
+        throw stream.str();
+    }
+    static void dayValueException(const std::string& msg) {
+        std::stringstream stream;
+        stream << "Day value is invalid: " << msg;
+        throw stream.str();
+    }
+};
+
+Exceptions exceptions;
+
+
 
 class Database {
 private:
-    std::map<int, std::array<std::array<int, 31>, 12>> _data;
+    std::set<Date> _data;
 public:
     void printAllEvents(std::ostream& stream) {
-        for (const auto& [year, month] : _data) {
 
-        }
     }
 };
 
@@ -28,11 +52,7 @@ std::optional<std::string> getString(std::stringstream& stream) {
     return {};
 }
 
-struct Date {
-    int year;
-    int month;
-    int day;
-};
+
 
 Date parseDate(const std::string& input) {
     Date date;
@@ -41,28 +61,24 @@ Date parseDate(const std::string& input) {
 
     stream >> date.year;
 
-    if (stream.eof() || stream.peek() != '-') throw ("Wrong date format: " + input);
+    if (stream.eof() || stream.peek() != '-') exceptions.dateFormatException(input);
     stream.ignore(1);
     stream >> date.month;
 
-    if (stream.eof() || stream.peek() != '-') throw ("Wrong date format: " + input);
+    if (stream.eof() || stream.peek() != '-') exceptions.dateFormatException(input);
     stream.ignore(1);
     stream >> date.day;
-    if (stream.fail() || !stream.eof()) throw ("Wrong date format: " + input);
+    if (stream.fail() || !stream.eof()) exceptions.dateFormatException(input);
 
     return date;
 }
 
 void checkValidDate(const Date& date) {
     if (date.month < 1 || date.month > 12) {
-        std::stringstream error;
-        error << "Month value is invalid " << date.month;
-        throw error.str();
+        exceptions.monthValueException(std::to_string(date.month));
     }
     if (date.day < 1 || date.day > 31) {
-        std::stringstream error;
-        error << "Day value is invalid: " << date.day;
-        throw error.str();
+        exceptions.dayValueException(std::to_string(date.day));
     }
 }
 
@@ -93,6 +109,8 @@ int main() {
     std::string date;
     std::cin >> date;
     parseDate(date);
+
+    
 
     return 0;
 }
