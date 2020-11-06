@@ -8,19 +8,41 @@ void Database::Print(std::ostream& stream) const {
     }
 }
 void Database::Add(const Date& date, const std::string& event) {
-    auto& events = data[date];
-    if (std::find(events.begin(), events.end(), event) == events.end()) {
+    auto& eventsForCheck = dataForSearch[date];
+    if (eventsForCheck.find(event) == eventsForCheck.end()) {
+        auto& events = data[date];
+        eventsForCheck.insert(event);
         events.push_back(event);
     }
 }
 
 std::string Database::Last(const Date& date) const {
-    auto result = std::find_if(data.rbegin(), data.rend(), [&](auto info) {return (info.first < date || info.first == date) && info.second.size() != 0;});
-    if (result != data.rend()) {
-        std::stringstream output;
-        output << result->first << " " << result->second.back();
-        return output.str();
+    auto result = data.upper_bound(date);
+    if (result != data.begin()) {
+        result = std::prev(result);
+        while (result != data.begin() && result->second.size() == 0) {
+            result = std::prev(result);
+        }
+        if (result->second.size() != 0) {
+            std::stringstream output;
+            output << result->first << " " << result->second.back();
+            return output.str();
+        }
     }
+
+
+    // auto result = data.upper_bound(date);
+    // if (result != data.begin()) {
+    //     result = std::prev(result);
+    //     while (result != data.begin() && result->second.size() == 0) {
+    //         result = std::prev(result);
+    //     }
+    //     if (result->second.size() != 0) {
+    //         std::stringstream output;
+    //         output << result->first << " " << result->second.back();
+    //         return output.str();
+    //     }
+    // }
     return "No entries";
 }
 

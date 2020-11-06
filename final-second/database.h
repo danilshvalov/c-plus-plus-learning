@@ -1,6 +1,7 @@
 #include <map>
 #include <vector>
 #include <algorithm>
+#include <set>
 
 #include "date.h"
 
@@ -11,6 +12,7 @@
 class Database {
 private:
     std::map<Date, std::vector<std::string>> data;
+    std::map<Date, std::set<std::string>> dataForSearch;
 public:
     void Print(std::ostream& stream) const;
     void Add(const Date& date, const std::string& event);
@@ -18,12 +20,16 @@ public:
     template <typename Predicate>
     int RemoveIf(const Predicate& predicate) {
         int counter = 0;
+        std::vector<Date> removingKeys;
         for (auto& [date, events] : data) {
-            auto it = std::remove_if(events.begin(), events.end(), [&, d = std::ref(date)](auto event) {
-                return predicate(d, event);
-            });
+            auto it = std::remove_if(events.begin(), events.end(), [&, refDate = std::ref(date)](const auto& event) {return predicate(refDate, event);});
             counter += std::distance(it, events.end());
             events.erase(it, events.end());
+            if (events.size() == 0) removingKeys.push_back(date);
+            dataForSearch[date] = {events.begin(), events.end()};
+        }
+        for (const auto& key : removingKeys) {
+            data.erase(key);
         }
         return counter;
     }

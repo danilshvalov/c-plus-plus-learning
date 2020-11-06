@@ -59,3 +59,5 @@ Date ParseDate(std::istream& os) {
     return date;
 }
 
+
+Date::Date(int year, int month, int day) : year(year), month(month), day(day) {}

@@ -8,6 +8,8 @@
 #ifndef __DATE_H__
 
 struct Date {
+    Date(int year, int month, int day);
+    Date() = default;
     int year;
     int month;
     int day;
