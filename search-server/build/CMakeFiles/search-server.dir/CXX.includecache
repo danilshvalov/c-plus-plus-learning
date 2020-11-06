@@ -1,0 +1,42 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/danilshvalov/dev/c-plus-plus/c-plus-plus-learning/search-server/main.cpp
+iostream
+-
+unordered_map
+-
+vector
+-
+sstream
+-
+set
+-
+algorithm
+-
+test_runner.h
+/home/danilshvalov/dev/c-plus-plus/c-plus-plus-learning/search-server/test_runner.h
+
+/home/danilshvalov/dev/c-plus-plus/c-plus-plus-learning/search-server/test_runner.h
+sstream
+-
+stdexcept
+-
+iostream
+-
+map
+-
+unordered_map
+-
+set
+-
+string
+-
+vector
+-
+

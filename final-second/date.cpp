@@ -12,6 +12,18 @@ bool operator==(const Date& lhs, const Date& rhs) {
     return std::tie(lhs.year, lhs.month, lhs.day) == std::tie(rhs.year, rhs.month, rhs.day);
 }
 
+bool operator>=(const Date& lhs, const Date& rhs) {
+    return std::tie(lhs.year, lhs.month, lhs.day) >= std::tie(rhs.year, rhs.month, rhs.day);
+}
+
+bool operator<=(const Date& lhs, const Date& rhs) {
+    return std::tie(lhs.year, lhs.month, lhs.day) <= std::tie(rhs.year, rhs.month, rhs.day);
+}
+
+bool operator!=(const Date& lhs, const Date& rhs) {
+    return std::tie(lhs.year, lhs.month, lhs.day) != std::tie(rhs.year, rhs.month, rhs.day);
+}
+
 std::ostream& operator<<(std::ostream& stream, const Date& date) {
     return stream << std::setw(4) << std::setfill('0') << date.year << '-' << std::setw(2) << date.month << '-' << std::setw(2) << date.day;
 }
@@ -46,3 +58,4 @@ Date ParseDate(std::istream& os) {
 
     return date;
 }
+

@@ -14,7 +14,7 @@ enum LogicalOperation {
 class Node {
 private:
 public:
-    virtual bool Evaluate(const Date& inputDate, const std::string& inputEvent);
+    virtual bool Evaluate(const Date& inputDate, const std::string& inputEvent) = 0;
 };
 class DateComparisonNode : public Node {
 private:
@@ -40,7 +40,9 @@ public:
     LogicalOperationNode(const LogicalOperation& op, std::shared_ptr<Node> lhs, std::shared_ptr<Node> rhs);
     bool Evaluate(const Date& inputDate, const std::string& inputEvent) override;
 };
-class EmptyNode : public Node {};
+class EmptyNode : public Node {
+     bool Evaluate(const Date& inputDate, const std::string& inputEvent) override;
+};
 
 
 #endif // __NODE_H__

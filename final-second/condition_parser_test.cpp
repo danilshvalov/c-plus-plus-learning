@@ -75,4 +75,11 @@ void TestParseCondition() {
         Assert(!root->Evaluate({ 2016, 1, 1 }, "event"), "Parse condition 29");
         Assert(root->Evaluate({ 2016, 1, 2 }, "event"), "Parse condition 30");
     }
+    {
+        istringstream is(R"(((date > 2016-01-01 OR event == "2017-01-01")))");
+        shared_ptr<Node> root = ParseCondition(is);
+        Assert(root->Evaluate({ 1, 1, 1 }, "2017-01-01"), "Parse condition 31");
+        Assert(!root->Evaluate({ 2016, 1, 1 }, "event"), "Parse condition 32");
+        Assert(root->Evaluate({ 2016, 1, 2 }, "event"), "Parse condition 33");
+    }
 }
