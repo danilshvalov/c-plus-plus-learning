@@ -125,7 +125,7 @@ void SimpleTests() {
     }
 }
 
-void IncludesTests() {
+void FirstCommunityTests() {
     {
         Database db;
         int n = 0;
@@ -156,7 +156,7 @@ void IncludesTests() {
     }
 }
 
-void IncludesSecondTests() {
+void SecondCommunityTests() {
     {
         Database db;
         vector<string> events = {
@@ -188,6 +188,6 @@ void TestAll() {
     tr.RunTest(TestParseEvent, "TestParseEvent");
     tr.RunTest(TestParseCondition, "TestParseCondition");
     tr.RunTest(SimpleTests, "SimpleTests");
-    tr.RunTest(IncludesTests, "IncludesTests");
-    tr.RunTest(IncludesSecondTests, "IncludesSecondTests");
+    tr.RunTest(FirstCommunityTests, "FirstCommunityTests");
+    tr.RunTest(SecondCommunityTests, "SecondCommunityTests");
 }
