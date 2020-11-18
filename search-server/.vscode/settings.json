@@ -1,6 +1,9 @@
 {
-    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
-    "files.associations": {
-        "iosfwd": "cpp"
-    }
+  "files.associations": {
+    "thread": "cpp",
+    "sstream": "cpp",
+    "ostream": "cpp",
+    "chrono": "cpp",
+    "vector": "cpp"
+  }
 }
